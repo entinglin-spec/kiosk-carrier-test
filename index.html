@@ -169,18 +169,17 @@ html,body{overscroll-behavior:none;-webkit-text-size-adjust:100%;touch-action:ma
 .doc.done .lead{font-size:56px;line-height:84px;font-weight:700;margin-bottom:20px}
 .doc.done .meta{font-size:36px;color:#8a7f6c;margin-bottom:60px}
 /* simulate-scan dock: floats outside the kiosk, only on scan screens in solo mode */
-#simdock{position:fixed;right:16px;bottom:16px;z-index:60;display:none;flex-direction:column;gap:8px;padding:12px;border-radius:14px;background:#1f2430;box-shadow:0 8px 30px rgba(0,0,0,.4);font-size:13px;color:#cfd5e3}
+#simdock{position:fixed;right:16px;bottom:calc(env(safe-area-inset-bottom) + 16px);z-index:60;display:none;flex-direction:row;gap:12px;padding:12px;border-radius:18px;background:rgba(31,36,48,.92);box-shadow:0 8px 30px rgba(0,0,0,.4)}
 #simdock.show{display:flex}
-#simdock .lab{font-weight:700;margin-bottom:2px}
-#simdock button{padding:10px 14px;border-radius:10px;font-size:14px;font-weight:700;color:#fff;background:#2f8f83;border:1px solid #2f8f83}
+#simdock .lab{display:none}
+#simdock button{min-width:170px;min-height:68px;padding:14px 22px;border-radius:14px;font-size:20px;font-weight:700;color:#fff;background:#2f8f83;border:2px solid #2f8f83}
 #simdock button:hover{background:#3aa89a}
 #simdock button:active{transform:scale(.97)}
-#simdock button.alt{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.25)}
+#simdock button.alt{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.3)}
 @media (max-aspect-ratio:4/5){
-  /* tablet / phone portrait: tuck the dock into the empty right side of the kiosk header */
-  #simdock{top:calc(env(safe-area-inset-top) + 10px);right:10px;bottom:auto;flex-direction:row;flex-wrap:wrap;justify-content:flex-end;max-width:62vw;padding:8px;gap:6px;background:rgba(31,36,48,.85)}
-  #simdock .lab{display:none}
-  #simdock button{padding:8px 10px;font-size:12px}
+  /* tablet / phone portrait: bottom strip, leaving the 返回 button on the left uncovered */
+  #simdock{left:230px;right:10px;justify-content:space-between;padding:10px;gap:10px}
+  #simdock button{flex:1;min-width:0;padding:14px 8px}
 }
 body.role-participant #simdock,body.role-experimenter #simdock{display:none!important}
 
