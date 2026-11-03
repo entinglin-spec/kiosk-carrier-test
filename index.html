@@ -286,7 +286,7 @@ body.role-solo #dual{display:none}
 
     <section class="card2 task">
       <h2>任務（念給受測者聽）</h2>
-      <p>你現在正在操作自助點餐機，已經點好餐，將結帳付款。<br><b>支付方式請選擇 LINEPay，發票類型請選擇電子發票。</b></p>
+      <p>你現在正在操作自助點餐機，已經點好餐，將結帳付款。<br><b>支付方式請選擇 LINEPay，發票類型請選擇手機載具。</b></p>
     </section>
 
     <section class="card2">
@@ -427,7 +427,7 @@ screens.intro = `
   <div class="intro">
     <div class="tag">測試任務說明</div>
     <div class="lead">你正在操作一台自助點餐機。<br>餐點已經點好，現在要結帳。</div>
-    <div class="goals">支付方式：選擇 <b>LINEPay</b><br>發票類型：選擇 <b>電子發票</b></div>
+    <div class="goals">支付方式：選擇 <b>LINEPay</b><br>發票類型：選擇 <b>手機載具</b></div>
     <div class="pidbox">受測者代號
       <input id="introPid" type="text" placeholder="例：P01" autocomplete="off">
       <div class="perr" id="pidErr"></div></div>
@@ -889,7 +889,7 @@ document.querySelectorAll('[data-scan]').forEach(b => b.addEventListener('click'
 /* ---------- panel ---------- */
 function updateExpect(){
   const sc = S.screen;
-  const t = { survey:'受測者填寫問卷中', done:'問卷完成，可匯出紀錄或換下一位', intro:'受測者閱讀任務說明，點「開始」後才開始計時', cart:'請受測者點「準備結帳」', pay:'預期：點 LINEPay', invoice:'預期：點「手機載具」（任務中的「電子發票」）',
+  const t = { survey:'受測者填寫問卷中', done:'問卷完成，可匯出紀錄或換下一位', intro:'受測者閱讀任務說明，點「開始」後才開始計時', cart:'請受測者點「準備結帳」', pay:'預期：點 LINEPay', invoice:'預期：點「手機載具」',
               carrier:'預期出示：手機載具條碼', epay:'預期出示：LINE Pay 付款碼', loading:'銀行連線中，等待…', success:'付款成功頁：觀察是否注意到載具資訊（Q4）', thanks:'流程結束' }[sc];
   $('simdock').classList.toggle('show', sc === 'carrier' || sc === 'epay');
   $('expect').innerHTML = `目前畫面：<b>${SCREEN_NAME[sc]}</b><br>${t}${$('modal').classList.contains('show') ? '<br>彈窗顯示中：預期選「已綁定載具」' : ''}`;
