@@ -797,7 +797,7 @@ stage.addEventListener('click', e => {
   }
 });
 /* ---------- upload to Google Sheet (Apps Script web app). Leave empty = local-only. ---------- */
-const ENDPOINT = 'https://script.google.com/a/macros/cashier.tw/s/AKfycbzs2q58J_fHnhYqVL__umYEEhYh_Zyp2kdO2mWYwWkBvFUQUj_FfSQw2fW5pZeIkc0/exec';
+const ENDPOINT = 'https://script.google.com/macros/s/AKfycbzwWKydH55yDEJj7lYZypasEeiHqSgOE07qq8PXEKhqc7pN3oU_jbO2jsQZ3WJHS_ew/exec';
 const QUEUE_KEY = 'kiosk-carrier-queue';
 const readQ = () => { try { return JSON.parse(localStorage.getItem(QUEUE_KEY) || '[]'); } catch { return []; } };
 const writeQ = q => { try { localStorage.setItem(QUEUE_KEY, JSON.stringify(q)); } catch {} };
