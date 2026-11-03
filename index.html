@@ -151,6 +151,7 @@ html,body{overscroll-behavior:none;-webkit-text-size-adjust:100%;touch-action:ma
 .intro .pidbox input.bad{border-color:#c0392b;background:#fdecea}
 .intro .perr{height:44px;margin-top:10px;font-size:32px;color:#c0392b}
 .intro .go{margin-top:60px}
+.intro .go .fsbtn{margin-top:36px;background:transparent;color:#8a7f6c;border:2px solid #8a7f6c;font-size:28px;font-weight:400;padding:14px 28px}
 .doc{position:absolute;inset:0;display:flex;flex-direction:column;padding:110px 110px 0;font-family:'Noto Sans TC','PingFang TC',sans-serif;color:#2b2b2b}
 .doc .tag{font-size:34px;letter-spacing:.2em;color:#8a7f6c;margin-bottom:40px}
 .doc .qb{margin-bottom:52px}
@@ -169,7 +170,7 @@ html,body{overscroll-behavior:none;-webkit-text-size-adjust:100%;touch-action:ma
 .doc.done .lead{font-size:56px;line-height:84px;font-weight:700;margin-bottom:20px}
 .doc.done .meta{font-size:36px;color:#8a7f6c;margin-bottom:60px}
 /* simulate-scan dock: floats outside the kiosk, only on scan screens in solo mode */
-#simdock{position:fixed;right:16px;bottom:calc(env(safe-area-inset-bottom) + 16px);z-index:60;display:none;flex-direction:row;gap:12px;padding:12px;border-radius:18px;background:rgba(31,36,48,.92);box-shadow:0 8px 30px rgba(0,0,0,.4)}
+#simdock{position:fixed;right:16px;bottom:calc(env(safe-area-inset-bottom) + 40px);z-index:60;display:none;flex-direction:row;gap:12px;padding:12px;border-radius:18px;background:rgba(31,36,48,.92);box-shadow:0 8px 30px rgba(0,0,0,.4)}
 #simdock.show{display:flex}
 #simdock .lab{display:none}
 #simdock button{min-width:170px;min-height:68px;padding:14px 22px;border-radius:14px;font-size:20px;font-weight:700;color:#fff;background:#2f8f83;border:2px solid #2f8f83}
@@ -431,7 +432,8 @@ screens.intro = `
       <input id="introPid" type="text" placeholder="例：P01" autocomplete="off">
       <div class="perr" id="pidErr"></div></div>
     <div class="go">閱讀完畢後，按下按鈕開始操作
-      <button data-act="intro.start" data-label="開始">開始測試</button></div>
+      <button data-act="intro.start" data-label="開始">開始測試</button>
+      <button class="fsbtn" data-act="intro.fs">全螢幕開關（主持人用，先按再交給受測者）</button></div>
   </div>`;
 
 const radios = (n, vals) => vals.map(v => `<label><input type="radio" name="${n}" value="${v}"><span>${v}</span></label>`).join('');
@@ -761,11 +763,14 @@ const UNSUPPORTED = { 'pay.cash':'此原型未包含「現金」流程，請選�
 stage.addEventListener('click', e => {
   const el = e.target.closest('[data-act]'); if (!el) return;
   const act = el.dataset.act, label = el.dataset.label || act;
+  if (act === 'intro.fs'){
+    try { const de = document.documentElement; if (document.fullscreenElement) document.exitFullscreen(); else if (de.requestFullscreen) de.requestFullscreen({ navigationUI:'hide' }).catch(() => {}); } catch {}
+    return;
+  }
   if (act === 'intro.start'){
     const pid = $('introPid').value.trim();
     if (!pid){ $('introPid').classList.add('bad'); $('pidErr').textContent = '請先輸入受測者代號'; $('introPid').focus(); return; }
     $('pid').value = pid;
-    try { const de = document.documentElement; if (!document.fullscreenElement && de.requestFullscreen) de.requestFullscreen({ navigationUI:'hide' }).catch(() => {}); } catch {}
     if (S.ended) startSession();
     if (!S.started) beginTask();
     return;
